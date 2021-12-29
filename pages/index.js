@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 
 const DUMMY_MEETUPS = [
@@ -19,8 +20,23 @@ const DUMMY_MEETUPS = [
   },
 ];
 
-function HomePage() {
-  return <MeetupList meetups={DUMMY_MEETUPS} />;
+function HomePage(props) {
+  return <MeetupList meetups={props.meetups} />;
+}
+
+// Static generation
+export async function getStaticProps() {
+  //fetch data from API
+  // execute any code that normally only run on a server
+  // code here is executed in the building process
+  // with revalidate we add Incremental Static Generation
+  // number of seconds that NEXTJS will wait until regenerate the page
+  return {
+    props: {
+      meetups: DUMMY_MEETUPS,
+    },
+    revalidate: 10,
+  };
 }
 
 export default HomePage;
